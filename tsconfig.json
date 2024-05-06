@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": false,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "sourceMap":true, // Important pour utiliser le debugger
+    "outDir": "./client/", //Votre dossier ou sortira le JS
+    "rootDir": "./client/" //Votre dossier avec vos fichier TS
+    },
+    "exclude": ["node_modules", "**/*.spec.ts"]
+   }
