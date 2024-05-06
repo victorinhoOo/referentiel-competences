@@ -1,4 +1,5 @@
+import MainView from './client/views/MainView';
 
 window.onload = () => {
-    console.log("Application started");
-}
+    const mainView = new MainView('departmentSelect'); 
+};
