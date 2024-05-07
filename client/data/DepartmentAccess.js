@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 class DepartmentAccess {
     constructor() {
-        this.apiUrl = 'https://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php';
+        this.apiUrl = 'https://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=get_depts';
     }
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const response = yield fetch(`${this.apiUrl}?action=get_depts`);
+                const response = yield fetch(this.apiUrl);
                 const data = yield response.json();
                 const departments = data.map((deptData) => Department.createFromObject(deptData));
                 return departments;

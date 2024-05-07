@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un Référentiel d'Activité</title>
+</head>
+<body>
+    <h1>Ajouter un Référentiel d'Activité</h1>
+    <form id="skillsForm">
+        <label for="departmentSelect">Département:</label>
+        <select id="departmentSelect">
+        </select><br>
+
+        <label for="repoName">Nom du référentiel:</label>
+        <input type="text" id="repoName" name="repoName"><br>
+
+        <label for="repoLevel">Niveau du référentiel (1-3):</label>
+        <input type="number" id="repoLevel" name="repoLevel" min="1" max="3"><br>
+
+        <label for="repoDate">Date du référentiel:</label>
+        <input type="date" id="repoDate" name="repoDate"><br>
+
+        <div id="skills">
+        </div>
+        <button type="button">Ajouter une nouvelle compétence</button><br>
+
+        <button type="submit">Créer</button>
+        <button type="button">Annuler</button>
+    </form>
+</body>
+<script src="client/views/SkillView.js"></script>
+<script src="client/main.js" type="module"></script>
+<script src="client/model/department.js"></script>
+<script src="client/views/MainView.js"></script>
+<script src="client/data/DepartmentAccess.js"></script>
+</html>
