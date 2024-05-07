@@ -24,6 +24,11 @@ class SkillView {
         this.numbers = [];
         this.lists = [];
 
+        let addButton = document.getElementById("addNewSkillButton") as HTMLButtonElement;
+        addButton.addEventListener("click", () => {
+            this.addNewSkill()
+        });
+
         this.init();
     }
 
@@ -39,5 +44,70 @@ class SkillView {
         });
         this.levelInput.value = '1'; 
         this.dateInput.valueAsDate = new Date(); 
+    }
+
+    private createInputFieldForSkillNumber(div: HTMLDivElement): void {
+        let labelId = "number" + this.currentSkillNumber.toString();
+        let label = document.createElement("label");
+        label.innerHTML = "Skill number:";
+        label.setAttribute("for", labelId);
+        div.appendChild(label);
+    
+        let input = document.createElement("input");
+        input.id = labelId;
+        input.type = "number";
+        input.value = this.currentSkillNumber.toString();
+        this.numbers.push(input); 
+        div.appendChild(input);
+    }
+
+    private createInputForSkillName(div: HTMLDivElement): void {
+        let labelId = "name" + this.currentSkillNumber.toString();
+        let label = document.createElement("label");
+        label.innerHTML = "Skill name:";
+        label.setAttribute("for", labelId);
+        div.appendChild(label);   
+        let input = document.createElement("input");
+        input.id = labelId;
+        input.type = "text";
+        div.appendChild(input);
+    }
+
+    private createDivForManageComponents(div: HTMLDivElement): void {
+        let subDiv = document.createElement("div");
+        // Création de l'étiquette, de la zone de saisi et du bouton
+        let label = document.createElement("label");
+        label.innerHTML = "Component:";
+        subDiv.appendChild(label);
+        let input = document.createElement("input");
+        input.type = "text";
+        subDiv.appendChild(input);
+        let button = document.createElement("button");
+        button.innerHTML = "Add Component";
+        button.onclick = () => {
+            // un item de liste est créé avec comme valeur le texte placé dans la zone de saisie
+            let listItem = document.createElement("li");
+            listItem.textContent = input.value;
+            this.lists[this.lists.length - 1].appendChild(listItem);
+            input.value = "";
+        };
+        subDiv.appendChild(button);
+        let ul = document.createElement("ul");
+        subDiv.appendChild(ul);
+        div.appendChild(subDiv);
+        this.lists.push(ul);
+    }
+
+    private addNewSkill(): void {
+        let skillDiv = document.createElement("div");
+        
+        let skillsContainer = document.getElementById("skills");
+        skillsContainer.appendChild(skillDiv);
+    
+        this.currentSkillNumber++;
+    
+        this.createInputFieldForSkillNumber(skillDiv);
+        this.createInputForSkillName(skillDiv);
+        this.createDivForManageComponents(skillDiv);
     }   
 }

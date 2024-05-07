@@ -18,6 +18,10 @@ class SkillView {
         this.labels = [];
         this.numbers = [];
         this.lists = [];
+        let addButton = document.getElementById("addNewSkillButton");
+        addButton.addEventListener("click", () => {
+            this.addNewSkill();
+        });
         this.init();
     }
     init() {
@@ -33,6 +37,61 @@ class SkillView {
             this.levelInput.value = '1';
             this.dateInput.valueAsDate = new Date();
         });
+    }
+    createInputFieldForSkillNumber(div) {
+        let labelId = "number" + this.currentSkillNumber.toString();
+        let label = document.createElement("label");
+        label.innerHTML = "Skill number:";
+        label.setAttribute("for", labelId);
+        div.appendChild(label);
+        let input = document.createElement("input");
+        input.id = labelId;
+        input.type = "number";
+        input.value = this.currentSkillNumber.toString();
+        this.numbers.push(input);
+        div.appendChild(input);
+    }
+    createInputForSkillName(div) {
+        let labelId = "name" + this.currentSkillNumber.toString();
+        let label = document.createElement("label");
+        label.innerHTML = "Skill name:";
+        label.setAttribute("for", labelId);
+        div.appendChild(label);
+        let input = document.createElement("input");
+        input.id = labelId;
+        input.type = "text";
+        div.appendChild(input);
+    }
+    createDivForManageComponents(div) {
+        let subDiv = document.createElement("div");
+        let label = document.createElement("label");
+        label.innerHTML = "Component:";
+        subDiv.appendChild(label);
+        let input = document.createElement("input");
+        input.type = "text";
+        subDiv.appendChild(input);
+        let button = document.createElement("button");
+        button.innerHTML = "Add Component";
+        button.onclick = () => {
+            let listItem = document.createElement("li");
+            listItem.textContent = input.value;
+            this.lists[this.lists.length - 1].appendChild(listItem);
+            input.value = "";
+        };
+        subDiv.appendChild(button);
+        let ul = document.createElement("ul");
+        subDiv.appendChild(ul);
+        div.appendChild(subDiv);
+        this.lists.push(ul);
+    }
+    addNewSkill() {
+        let skillDiv = document.createElement("div");
+        let skillsContainer = document.getElementById("skills");
+        skillsContainer.appendChild(skillDiv);
+        this.currentSkillNumber++;
+        this.createInputFieldForSkillNumber(skillDiv);
+        this.createInputForSkillName(skillDiv);
+        this.createDivForManageComponents(skillDiv);
     }
 }
 //# sourceMappingURL=SkillView.js.map
