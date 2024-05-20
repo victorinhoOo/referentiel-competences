@@ -1,28 +1,74 @@
 /// <reference path="../model/Skill.ts" />
 class SkillSet{
     private id: number;
-    private name: string;
-    private level: number;
-    private date: Date;
-    private active: Boolean;
-    private code_department: string;
 
+    public getId(): number {
+        return this.id;
+    }
+    public setId(newId: number): void {
+        this.id = newId;
+    }
+
+    private name: string;
+    public getName(): string {
+        return this.name;
+    }
+    public setName(newName: string): void {
+        this.name = newName;
+    }
+        
+    private level: number;
+    public getLevel(): number {
+        return this.level;
+    }
+    public setLevel(newLevel: number): void {
+        this.level = newLevel;
+    }
+        
+    private date: Date;
+    public getDate(): Date {
+        return this.date;
+    }
+    public setDate(newDate: Date): void {
+        this.date = newDate;
+    }
+        
+    private active: Boolean;
+    public isActive(): Boolean {
+        return this.active;
+    }
+    public setActive(newActive: boolean): void {
+        this.active = newActive;
+    }    
+
+    private code_department: string;
+    public getCodeDepartment(): string {
+        return this.code_department;
+    }
+    public setCodeDepartment(newCodeDepartment: string): void {
+        this.code_department = newCodeDepartment;
+    }
+    
     private skills: Array<Skill>
 
-    public createFromObject(obj): SkillSet{
+    public static createFromObject(obj): SkillSet{
         const skillSet = new SkillSet(obj.code_department); 
-
-        // Initialise les propriétés de l'instance skillSet avec les valeurs de l'objet obj
         skillSet.id = obj.id;
         skillSet.name = obj.name;
         skillSet.level = obj.level;
-        skillSet.date = new Date(obj.date); // Assurez-vous que la date est correctement instanciée comme un objet Date
+        skillSet.date = new Date(obj.date); 
         skillSet.active = obj.active;
+
+        return skillSet;
     }
-    public _constructor(code_dept: string){
+    public constructor(code_dept: string){
         this.code_department = code_dept;
-        this.skills = []
+        this.skills = [];
         this.id = 0;
+        this.date = new Date();
+        this.active = false;
+        this.name = '';
+        this.level = 0;
     }
     public addSkill(skill: Skill): void{
         this.skills.push(skill)

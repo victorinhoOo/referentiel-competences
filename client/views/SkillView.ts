@@ -8,7 +8,7 @@ class SkillView {
     private dateInput: HTMLInputElement;
 
     private currentSkillNumber: number;
-    private labels: Array<HTMLLabelElement>;
+    private labels: Array<HTMLInputElement>;
     private numbers: Array<HTMLInputElement>;
     private lists: Array<HTMLUListElement>;
 
@@ -28,6 +28,10 @@ class SkillView {
         addButton.addEventListener("click", () => {
             this.addNewSkill()
         });
+
+        let createButton = document.getElementById("createButton") as HTMLButtonElement;
+        createButton.addEventListener("click", () => this.createSkillSet());
+
 
         this.init();
     }
@@ -110,4 +114,48 @@ class SkillView {
         this.createInputForSkillName(skillDiv);
         this.createDivForManageComponents(skillDiv);
     }   
+
+    private async createSkillSet(): Promise<void> {
+        const selectedDeptCode = this.departmentSelect.value;
+    
+        let newSkillSet = new SkillSet(selectedDeptCode);
+        newSkillSet.setName(this.nameInput.value);
+        newSkillSet.setLevel(parseInt(this.levelInput.value));
+        newSkillSet.setDate(new Date(this.dateInput.value));
+        newSkillSet.setActive(true); 
+    
+        // Pour chaque skill
+        for (let i = 0; i < this.currentSkillNumber; i++) {
+            let skill = new Skill(); 
+            skill.setId(parseInt(this.numbers[i].value));
+            skill.setLabel(this.labels[i].value); // assuming labels is an array of input elements for skill names
+    
+            // Parcourir les composantes essentielles
+            let componentsList = this.lists[i].children;
+            for (let item of componentsList) {
+                let component = new Component(); // Assuming Component is a class you have defined
+                component.setLabel(item.textContent); // assuming the item is the LI element
+                skill.addComponent(component);
+            }
+    
+            // Ajouter la compétence au référentiel
+            newSkillSet.addSkill(skill);
+        }
+    
+        // Utilisation d’un objet de type SkillAccess pour envoyer le SkillSet créé au serveur
+        let skillAccess = new SkillAccess();
+        try {
+            let result = await skillAccess.create(newSkillSet);
+            if (result) {
+                alert("SkillSet created successfully!");
+                window.location.href = "index.html"; 
+            } else {
+                alert("Failed to create SkillSet.");
+            }
+        } catch (error) {
+            console.error('Failed to save the skill set:', error);
+            alert("Error creating SkillSet: " + error.message);
+        }
+    }
+    
 }
