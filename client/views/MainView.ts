@@ -47,11 +47,11 @@ class MainView{
         const selectedOption = this.selectSkill.options[selectedIndex];
         const skillSetId = selectedOption.value;
         try {
-            const skillSet = await this.skillAccess.getSkillSetById(skillSetId); 
+            const skillSet = await this.skillAccess.getSkillSetById(skillSetId); // Assuming there is a method to fetch skill set by ID
             const skillSetJson = JSON.stringify(skillSet);
             sessionStorage.setItem("skillset", skillSetJson);
         } catch (error) {
-            console.error(error);
+            console.error("Error storing skill set:", error);
         }
     }
     

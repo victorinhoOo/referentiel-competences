@@ -54,7 +54,7 @@ class MainView {
                 sessionStorage.setItem("skillset", skillSetJson);
             }
             catch (error) {
-                console.error(error);
+                console.error("Error storing skill set:", error);
             }
         });
     }
