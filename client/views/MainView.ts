@@ -14,6 +14,9 @@ class MainView{
         this.selectSkill = document.getElementById(selectSkillId) as HTMLSelectElement;
         this.selectElement.onchange = () => this.ChooseDept();
 
+        const competencesButton = document.getElementById("competencesButton") as HTMLButtonElement;
+        competencesButton.onclick = () => this.storeSkillSet();
+
         this.init();
     }
 
@@ -39,4 +42,17 @@ class MainView{
             this.selectSkill.appendChild(option);
         });
     }
+    private async storeSkillSet(): Promise<void> {
+        const selectedIndex = this.selectSkill.selectedIndex;
+        const selectedOption = this.selectSkill.options[selectedIndex];
+        const skillSetId = selectedOption.value;
+        try {
+            const skillSet = await this.skillAccess.getSkillSetById(skillSetId); 
+            const skillSetJson = JSON.stringify(skillSet);
+            sessionStorage.setItem("skillset", skillSetJson);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    
 }

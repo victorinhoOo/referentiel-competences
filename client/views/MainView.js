@@ -14,6 +14,8 @@ class MainView {
         this.skillAccess = new SkillAccess();
         this.selectSkill = document.getElementById(selectSkillId);
         this.selectElement.onchange = () => this.ChooseDept();
+        const competencesButton = document.getElementById("competencesButton");
+        competencesButton.onclick = () => this.storeSkillSet();
         this.init();
     }
     init() {
@@ -39,6 +41,21 @@ class MainView {
                 option.textContent = skillSet.toString();
                 this.selectSkill.appendChild(option);
             });
+        });
+    }
+    storeSkillSet() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const selectedIndex = this.selectSkill.selectedIndex;
+            const selectedOption = this.selectSkill.options[selectedIndex];
+            const skillSetId = selectedOption.value;
+            try {
+                const skillSet = yield this.skillAccess.getSkillSetById(skillSetId);
+                const skillSetJson = JSON.stringify(skillSet);
+                sessionStorage.setItem("skillset", skillSetJson);
+            }
+            catch (error) {
+                console.error(error);
+            }
         });
     }
 }
