@@ -5,18 +5,41 @@ require_once("sgbd/database.php");
 require_once("controllers/skills_controller.php");
 require_once("sgbd/skills_dao.php");
 require_once("ApiException.php");
-
+require_once("model/skillset.php");
+require_once("controllers/user_controller.php");
+require_once("sgbd/user_dao.php");
+require_once("model/Token.php");
+require_once("AuthorizeException.php");
 try{
     $db = new Database();
     $deptController = new DepartmentController(new DepartmentService(new DepartmentDao($db)));
     $skillsController = new SkillsController(new SkillsService(new SkillsDao($db)));
+    $userController = new UserController(new UserService(new UserDao($db)));
+
+    $token = null;
 
     if (isset($_GET["action"])) {
         if ($_GET["action"] == "get_depts") {
             $deptController->getDepartments();
-        } else if ($_GET["action"] == "get_skillsets" && isset($_GET["code"])) {
+        }
+        else if ($_GET["action"] == "get_skillsets" && isset($_GET["code"])) {
             $code = $_GET["code"];
             $skillsController->getSkillsSet($code);
+        }
+        else if($_GET["action"]=="add_skillset"){
+            $body = file_get_contents("php://input");
+            $array = json_decode($body);
+            $obj = $array->token;
+            if($obj==null) throw new AuthorizeException("No token found");            
+            $token = Token::createFromObject($obj);
+            $set = $array->skillSet;
+            $skillset = SkillSet::createFromObject($set);
+            $skillsController->addSkillSet($skillset, $token);
+        }
+        else if($_GET["action"]=="login"){
+            $login = $_GET["login"];
+            $password = $_GET["password"];
+            $userController->connect($login, $password);
         }
         else{
             throw new ApiException(405,"Parameters not correct");
@@ -27,11 +50,11 @@ try{
     }
 }
 catch(ApiException $e){
-    header($e->__toString());
+    http_response_code($e->getStatus());
     echo $e->getMessage();
 }
-catch(Exception $e2){
-    header("HTTP/1.0 500 System error");
-    echo $e->getMessage();
+catch(Exception | Error $e2){
+    http_response_code(500);
+    echo $e2->getMessage();
 }
 ?>

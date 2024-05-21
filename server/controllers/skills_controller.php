@@ -21,8 +21,26 @@ class SkillsController{
      * Http response --> json array with skill sets
      */
     public function getSkillsSet(string $code){
+
         $skillsets = $this->service->getSets($code);
         echo json_encode($skillsets);
+    }
+
+    /**
+     * Add a skill set
+     * @param SkillSet $set skillset to add
+     * @param Token $token the authorization token
+     * Warning : only a chief can access this API
+     * @throws AuthorizeException if no token or user not authorized
+     * HTTP response : id of the skillset (not usable)
+     */
+    public function addSkillSet(SkillSet $set, Token $token){
+        if($token==null || !$token->checkToken())
+            throw new AuthorizeException("invalid token");
+        if(!$token->hasRole("chief"))
+            throw new AuthorizeException("User $token->getUsername() is not authorized");
+        $this->service->addSkillSet($set);
+        echo $set->getId();
     }
 }
 ?>

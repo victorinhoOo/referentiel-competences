@@ -8,9 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class MainView {
-    constructor(selectId) {
+    constructor(selectId, selectSkillId) {
         this.selectElement = document.getElementById(selectId);
         this.departmentAccess = new DepartmentAccess();
+        this.skillAccess = new SkillAccess();
+        this.selectSkill = document.getElementById(selectSkillId);
+        this.selectElement.onchange = () => this.ChooseDept();
         this.init();
     }
     init() {
@@ -22,6 +25,19 @@ class MainView {
                 option.value = department.code;
                 option.textContent = department.toString();
                 this.selectElement.appendChild(option);
+            });
+        });
+    }
+    ChooseDept() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const selectedDeptCode = this.selectElement.value;
+            const skillSets = yield this.skillAccess.getSkillSets(selectedDeptCode);
+            this.selectSkill.innerHTML = '';
+            skillSets.forEach(skillSet => {
+                const option = document.createElement('option');
+                option.value = skillSet.getId.toString();
+                option.textContent = skillSet.toString();
+                this.selectSkill.appendChild(option);
             });
         });
     }

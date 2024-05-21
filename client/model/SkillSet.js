@@ -8,6 +8,42 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class SkillSet {
+    getId() {
+        return this.id;
+    }
+    setId(newId) {
+        this.id = newId;
+    }
+    getName() {
+        return this.name;
+    }
+    setName(newName) {
+        this.name = newName;
+    }
+    getLevel() {
+        return this.level;
+    }
+    setLevel(newLevel) {
+        this.level = newLevel;
+    }
+    getDate() {
+        return this.date;
+    }
+    setDate(newDate) {
+        this.date = newDate;
+    }
+    isActive() {
+        return this.active;
+    }
+    setActive(newActive) {
+        this.active = newActive;
+    }
+    getCodeDepartment() {
+        return this.code_department;
+    }
+    setCodeDepartment(newCodeDepartment) {
+        this.code_department = newCodeDepartment;
+    }
     static createFromObject(obj) {
         const skillSet = new SkillSet(obj.code_department);
         skillSet.id = obj.id;

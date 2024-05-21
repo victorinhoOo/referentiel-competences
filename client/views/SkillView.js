@@ -22,6 +22,8 @@ class SkillView {
         addButton.addEventListener("click", () => {
             this.addNewSkill();
         });
+        let createButton = document.getElementById("createButton");
+        createButton.addEventListener("click", () => this.createSkillSet());
         this.init();
     }
     init() {
@@ -92,6 +94,43 @@ class SkillView {
         this.createInputFieldForSkillNumber(skillDiv);
         this.createInputForSkillName(skillDiv);
         this.createDivForManageComponents(skillDiv);
+    }
+    createSkillSet() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const selectedDeptCode = this.departmentSelect.value;
+            let newSkillSet = new SkillSet(selectedDeptCode);
+            newSkillSet.setName(this.nameInput.value);
+            newSkillSet.setLevel(parseInt(this.levelInput.value));
+            newSkillSet.setDate(new Date(this.dateInput.value));
+            newSkillSet.setActive(true);
+            for (let i = 0; i < this.currentSkillNumber; i++) {
+                let skill = new Skill();
+                skill.setId(parseInt(this.numbers[i].value));
+                skill.setLabel(this.labels[i].value);
+                let componentsList = this.lists[i].children;
+                for (let item of componentsList) {
+                    let component = new Component();
+                    component.setLabel(item.textContent);
+                    skill.addComponent(component);
+                }
+                newSkillSet.addSkill(skill);
+            }
+            let skillAccess = new SkillAccess();
+            try {
+                let result = yield skillAccess.create(newSkillSet);
+                if (result) {
+                    alert("SkillSet created successfully!");
+                    window.location.href = "index.html";
+                }
+                else {
+                    alert("Failed to create SkillSet.");
+                }
+            }
+            catch (error) {
+                console.error('Failed to save the skill set:', error);
+                alert("Error creating SkillSet: " + error.message);
+            }
+        });
     }
 }
 //# sourceMappingURL=SkillView.js.map
