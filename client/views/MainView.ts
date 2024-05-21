@@ -5,7 +5,7 @@ class MainView{
     private selectElement: HTMLSelectElement;
     private departmentAccess: DepartmentAccess;
     private selectSkill: HTMLSelectElement;
-    private skillAccess: SkillAccess
+    private skillAccess: SkillAccess;
 
     constructor(selectId: string, selectSkillId : string) {
         this.selectElement = document.getElementById(selectId) as HTMLSelectElement;

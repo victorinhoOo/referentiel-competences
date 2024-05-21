@@ -1,3 +1,4 @@
+// Gère les attributs d'un utilisateur
 class User {
     private login: string;
     private name: string;

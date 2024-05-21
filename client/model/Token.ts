@@ -1,4 +1,5 @@
 /// <reference path="../model/User.ts" />
+//Gère les attributs d'un token
 class Token {
     private header: string;
     private connectedUser: User;
@@ -14,6 +15,7 @@ class Token {
     }
 
     static createFromObject(obj: any): Token {
+        console.log(obj);
         const user = User.createFromObject(obj.connectedUser);
         return new Token(obj.header, user, obj.signature);
     }
