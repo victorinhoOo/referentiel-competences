@@ -12,7 +12,7 @@ class UserAccess{
             const data = await response.json();
             return Token.createFromObject(data.token);
         } catch (error) {
-            console.error('Error connecting user:', error);
+            console.error('Erreur de connexion: ', error);
             throw error;
         }
     }

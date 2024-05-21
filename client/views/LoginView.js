@@ -7,25 +7,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-class UserAccess {
+class LoginView {
     constructor() {
-        this.apiUrl = 'https://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=login';
+        this.loginInput = document.getElementById('login');
+        this.passwordInput = document.getElementById('password');
+        this.userAccess = new UserAccess();
+        const loginButton = document.getElementById('loginButton');
+        loginButton.addEventListener('click', () => this.login());
     }
-    connectUser(login, password) {
+    login() {
         return __awaiter(this, void 0, void 0, function* () {
-            const url = new URL(this.apiUrl);
-            url.searchParams.append("login", login);
-            url.searchParams.append("password", password);
+            const login = this.loginInput.value;
+            const password = this.passwordInput.value;
             try {
-                const response = yield fetch(url.toString());
-                const data = yield response.json();
-                return Token.createFromObject(data.token);
+                const token = yield this.userAccess.connectUser(login, password);
+                sessionStorage.setItem('authToken', JSON.stringify(token));
+                console.log(`Utilisateur ${token.getConnectedUser().getName()} connecté`);
             }
             catch (error) {
-                console.error('Erreur de connexion: ', error);
-                throw error;
+                console.error('Connexion échouée:', error);
             }
         });
     }
 }
-//# sourceMappingURL=UserAccess.js.map
+//# sourceMappingURL=LoginView.js.map
