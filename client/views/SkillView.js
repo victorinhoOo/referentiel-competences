@@ -63,6 +63,7 @@ class SkillView {
         input.id = labelId;
         input.type = "text";
         div.appendChild(input);
+        this.labels.push(input);
     }
     createDivForManageComponents(div) {
         let subDiv = document.createElement("div");
@@ -73,6 +74,7 @@ class SkillView {
         input.type = "text";
         subDiv.appendChild(input);
         let button = document.createElement("button");
+        button.type = "button";
         button.innerHTML = "Add Component";
         button.onclick = () => {
             let listItem = document.createElement("li");
@@ -107,14 +109,20 @@ class SkillView {
                 let skill = new Skill();
                 skill.setId(parseInt(this.numbers[i].value));
                 skill.setLabel(this.labels[i].value);
-                let componentsList = this.lists[i].children;
-                for (let item of componentsList) {
+                console.log("List children:", this.lists[i].children);
+                let id = 1;
+                for (let item of this.lists[i].children) {
+                    console.log("Processing item:", item, "Content:", item.textContent);
                     let component = new Component();
                     component.setLabel(item.textContent);
+                    component.setId(id);
                     skill.addComponent(component);
+                    id++;
                 }
                 newSkillSet.addSkill(skill);
+                console.log(skill);
             }
+            console.log(newSkillSet);
             let skillAccess = new SkillAccess();
             try {
                 let result = yield skillAccess.create(newSkillSet);

@@ -1,6 +1,6 @@
 /// <reference path="../model/department.ts" />
 class DepartmentAccess {
-    private apiUrl: string = 'http://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=get_depts';
+    private apiUrl: string = 'http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=get_depts';
 
     public async getAll(): Promise<Department[]> {
         try {

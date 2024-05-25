@@ -24,5 +24,14 @@ class SkillsService
     public function getSets(string $codeDept) : array{
         return $this->dao->getSets($codeDept);
     }
+
+    /**
+     * Add a skill set to data
+     * @param SkillSet $set the new skill set
+     */
+    public function addSkillSet(SkillSet $set)
+    {
+        $this->dao->insertSkillSet($set);
+    }
 }
 ?>

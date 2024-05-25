@@ -23,5 +23,6 @@ class DepartmentService{
     {
         return $this->data->getAll();
     }
+
 }
 ?>

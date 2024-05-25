@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 class DepartmentAccess {
     constructor() {
-        this.apiUrl = 'http://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=get_depts';
+        this.apiUrl = 'http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=get_depts';
     }
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {

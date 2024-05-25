@@ -36,35 +36,8 @@
     {
         echo "failed with this message :" . $pdoex->getMessage();
     }
-    ?>
+     ?>
     </span></p><hr />
-    <h2>Test of database upgrade for TP3</h2>
-    <p>
-        The database upgrade <span>
-                                 <?php
-            require_once("sgbd/user_dao.php");
-            require_once("model/user_service.php");
-            require_once("ApiException.php");
-            require_once("controllers/user_controller.php");
-            try{
-                $db = new Database();
-                $dao = new UserDao($db);
-                $obj= $dao->getUser("toto",'password');
-                if($obj == null) throw new ApiException(401,"Unabled to authenticate");
-                $service = new UserService($dao);
-                $token = $service->connectUser("toto","password");
-                if($token==null) throw new ApiException(500,"Service error");
-                $controller = new UserController($service);
-                echo "was successful. Example of token for user toto : ";
-                $controller->connect("toto","password");
-            }
-            catch (Exception $pdoex)
-            {
-                echo "failed with this message :" . $pdoex->getMessage();
-            }
-                                 ?>
-        </span>
-    </p><hr />
 </body>
 </html>
 <?php

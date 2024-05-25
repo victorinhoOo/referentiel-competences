@@ -1,6 +1,9 @@
 // Gère les composants
 class Component{
     private id: number;
+    public setId(value : number): void {
+        this.id = value;
+    }
     private label: String;
     public setLabel(value: string): void {
         this.label = value;

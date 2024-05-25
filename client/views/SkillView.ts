@@ -70,11 +70,13 @@ class SkillView {
         let label = document.createElement("label");
         label.innerHTML = "Skill name:";
         label.setAttribute("for", labelId);
-        div.appendChild(label);   
+        div.appendChild(label);
+    
         let input = document.createElement("input");
         input.id = labelId;
         input.type = "text";
         div.appendChild(input);
+        this.labels.push(input); 
     }
 
     private createDivForManageComponents(div: HTMLDivElement): void {
@@ -87,6 +89,7 @@ class SkillView {
         input.type = "text";
         subDiv.appendChild(input);
         let button = document.createElement("button");
+        button.type="button";
         button.innerHTML = "Add Component";
         button.onclick = () => {
             // un item de liste est créé avec comme valeur le texte placé dans la zone de saisie
@@ -128,21 +131,21 @@ class SkillView {
         for (let i = 0; i < this.currentSkillNumber; i++) {
             let skill = new Skill(); 
             skill.setId(parseInt(this.numbers[i].value));
-            skill.setLabel(this.labels[i].value); // assuming labels is an array of input elements for skill names
-    
-            // Parcourir les composantes essentielles
-            let componentsList = this.lists[i].children;
-            for (let item of componentsList) {
-                let component = new Component(); // Assuming Component is a class you have defined
-                component.setLabel(item.textContent); // assuming the item is the LI element
+            skill.setLabel(this.labels[i].value); 
+            // Parcourt les composant essentiels
+            console.log("List children:", this.lists[i].children);
+            for (let item of this.lists[i].children) {
+                console.log("Processing item:", item, "Content:", item.textContent);
+                let component = new Component(); 
+                component.setLabel(item.textContent);
                 skill.addComponent(component);
             }
     
-            // Ajouter la compétence au référentiel
+            // Ajoute la compétence au référentiel
             newSkillSet.addSkill(skill);
+            console.log(skill);
         }
-    
-        // Utilisation d’un objet de type SkillAccess pour envoyer le SkillSet créé au serveur
+        console.log(newSkillSet);
         let skillAccess = new SkillAccess();
         try {
             let result = await skillAccess.create(newSkillSet);

@@ -49,7 +49,7 @@ class MainView {
             const selectedOption = this.selectSkill.options[selectedIndex];
             const skillSetId = selectedOption.value;
             try {
-                const skillSet = yield this.skillAccess.getSkillSetById(skillSetId);
+                const skillSet = yield this.skillAccess.getSkillSets(skillSetId);
                 const skillSetJson = JSON.stringify(skillSet);
                 sessionStorage.setItem("skillset", skillSetJson);
             }

@@ -1,4 +1,7 @@
 class Component {
+    setId(value) {
+        this.id = value;
+    }
     setLabel(value) {
         this.label = value;
     }
