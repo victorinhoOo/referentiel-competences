@@ -10,7 +10,6 @@ class UserAccess{
         url.searchParams.append("login", login);
         url.searchParams.append("password", password);
         try {
-            console.log(url.toString());
             const response = await fetch(url.toString());
             const data = await response.json();
             return Token.createFromObject(data);

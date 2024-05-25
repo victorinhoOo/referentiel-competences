@@ -9,6 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 class MainView {
     constructor(selectId, selectSkillId) {
+        try {
+            const token = Token.createFromSessionStorage();
+        }
+        catch (e) {
+            alert("You are not connected");
+            window.location.href = "login.html";
+        }
         this.selectElement = document.getElementById(selectId);
         this.departmentAccess = new DepartmentAccess();
         this.skillAccess = new SkillAccess();
@@ -28,6 +35,7 @@ class MainView {
                 option.textContent = department.toString();
                 this.selectElement.appendChild(option);
             });
+            this.ChooseDept();
         });
     }
     ChooseDept() {

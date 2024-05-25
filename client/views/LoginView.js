@@ -23,6 +23,7 @@ class LoginView {
                 const token = yield this.userAccess.connectUser(login, password);
                 sessionStorage.setItem('authToken', JSON.stringify(token));
                 console.log(`Utilisateur ${token.getConnectedUser().getName()} connecté`);
+                window.location.href = "index.html";
             }
             catch (error) {
                 console.error('Connexion échouée:', error);

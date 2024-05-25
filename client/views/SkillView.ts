@@ -1,4 +1,5 @@
 /// <reference path="../data/DepartmentAccess.ts" />
+/// <reference path="../model/Token.ts" />
 // Gère l'affichage du référentiel d'activité
 class SkillView {
     private departmentSelect: HTMLSelectElement;
@@ -12,7 +13,24 @@ class SkillView {
     private numbers: Array<HTMLInputElement>;
     private lists: Array<HTMLUListElement>;
 
+    private token: Token;
+
+    /**
+     * Initialise les différents éléments HTML et ajoute des events listeners sur les boutons
+     */
     constructor() {
+        try {
+            this.token = Token.createFromSessionStorage();
+            if(!this.token.userHasRole("chief")){
+                alert("You don't have the permissions to access this page");
+                window.location.href = "login.html";
+            }
+        }
+        catch (e) {
+            console.log(e);
+            alert("You are not connected");
+            window.location.href = "login.html";
+        }
         this.departmentSelect = document.getElementById('departmentSelect') as HTMLSelectElement;
         this.levelInput = document.getElementById('repoLevel') as HTMLInputElement;
         this.nameInput = document.getElementById('repoName') as HTMLInputElement;
@@ -32,6 +50,8 @@ class SkillView {
         let createButton = document.getElementById("createButton") as HTMLButtonElement;
         createButton.addEventListener("click", () => this.createSkillSet());
 
+        let cancelButton = document.getElementById("cancelButton") as HTMLButtonElement;
+        cancelButton.addEventListener("click", () => this.redirectToHomepage());
 
         this.init();
     }
@@ -79,6 +99,7 @@ class SkillView {
         this.labels.push(input); 
     }
 
+    // Gère l'affichage de l'ajout de composants
     private createDivForManageComponents(div: HTMLDivElement): void {
         let subDiv = document.createElement("div");
         // Création de l'étiquette, de la zone de saisi et du bouton
@@ -105,6 +126,7 @@ class SkillView {
         this.lists.push(ul);
     }
 
+    // Gère l'affichage de l'ajout de compétence
     private addNewSkill(): void {
         let skillDiv = document.createElement("div");
         
@@ -118,6 +140,7 @@ class SkillView {
         this.createDivForManageComponents(skillDiv);
     }   
 
+    // Créé un nouveau référentiel
     private async createSkillSet(): Promise<void> {
         const selectedDeptCode = this.departmentSelect.value;
     
@@ -148,7 +171,7 @@ class SkillView {
         console.log(newSkillSet);
         let skillAccess = new SkillAccess();
         try {
-            let result = await skillAccess.create(newSkillSet);
+            let result = await skillAccess.create(newSkillSet, this.token);
             if (result) {
                 alert("SkillSet created successfully!");
                 window.location.href = "index.html"; 
@@ -160,5 +183,8 @@ class SkillView {
             alert("Error creating SkillSet: " + error.message);
         }
     }
+    private redirectToHomepage(): void{
+        window.location.href = "index.html";
+    } 
     
 }

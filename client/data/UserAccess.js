@@ -17,7 +17,6 @@ class UserAccess {
             url.searchParams.append("login", login);
             url.searchParams.append("password", password);
             try {
-                console.log(url.toString());
                 const response = yield fetch(url.toString());
                 const data = yield response.json();
                 return Token.createFromObject(data);

@@ -24,9 +24,13 @@ class SkillAccess {
             }
         });
     }
-    create(set) {
+    create(set, token) {
         return __awaiter(this, void 0, void 0, function* () {
-            const str = JSON.stringify(set);
+            const compositeObject = {
+                skillSet: set,
+                token: token
+            };
+            const str = JSON.stringify(compositeObject);
             let response = yield fetch("http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=add_skillset", {
                 method: "POST",
                 headers: {
@@ -35,11 +39,7 @@ class SkillAccess {
                 },
                 body: str
             });
-            let ret = true;
-            if (!response.ok) {
-                ret = false;
-            }
-            return ret;
+            return response.ok;
         });
     }
 }

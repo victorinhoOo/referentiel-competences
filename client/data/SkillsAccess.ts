@@ -13,21 +13,23 @@ class SkillAccess{
         }
     }
 
-    public async create(set: SkillSet): Promise<boolean>{
-        const str = JSON.stringify(set);
+    public async create(set: SkillSet, token: Token): Promise<boolean> {
+        const compositeObject = {
+            skillSet: set,
+            token: token
+        };
+    
+        const str = JSON.stringify(compositeObject);
+    
         let response = await fetch("http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=add_skillset", {
-        method: "POST",
-        headers: {
-        "Accept": "application/json",
-        "Content-type":"application/json"
-        },
-        body: str
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            body: str
         });
-        let ret = true;
-        if (!response.ok) {
-        ret = false;
-        }
-        return ret;
-        }
+        return response.ok;
+    }
 
 }

@@ -9,6 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 class SkillView {
     constructor() {
+        try {
+            this.token = Token.createFromSessionStorage();
+            if (!this.token.userHasRole("chief")) {
+                alert("You don't have the permissions to access this page");
+                window.location.href = "login.html";
+            }
+        }
+        catch (e) {
+            console.log(e);
+            alert("You are not connected");
+            window.location.href = "login.html";
+        }
         this.departmentSelect = document.getElementById('departmentSelect');
         this.levelInput = document.getElementById('repoLevel');
         this.nameInput = document.getElementById('repoName');
@@ -24,6 +36,8 @@ class SkillView {
         });
         let createButton = document.getElementById("createButton");
         createButton.addEventListener("click", () => this.createSkillSet());
+        let cancelButton = document.getElementById("cancelButton");
+        cancelButton.addEventListener("click", () => this.redirectToHomepage());
         this.init();
     }
     init() {
@@ -110,14 +124,11 @@ class SkillView {
                 skill.setId(parseInt(this.numbers[i].value));
                 skill.setLabel(this.labels[i].value);
                 console.log("List children:", this.lists[i].children);
-                let id = 1;
                 for (let item of this.lists[i].children) {
                     console.log("Processing item:", item, "Content:", item.textContent);
                     let component = new Component();
                     component.setLabel(item.textContent);
-                    component.setId(id);
                     skill.addComponent(component);
-                    id++;
                 }
                 newSkillSet.addSkill(skill);
                 console.log(skill);
@@ -125,7 +136,7 @@ class SkillView {
             console.log(newSkillSet);
             let skillAccess = new SkillAccess();
             try {
-                let result = yield skillAccess.create(newSkillSet);
+                let result = yield skillAccess.create(newSkillSet, this.token);
                 if (result) {
                     alert("SkillSet created successfully!");
                     window.location.href = "index.html";
@@ -139,6 +150,9 @@ class SkillView {
                 alert("Error creating SkillSet: " + error.message);
             }
         });
+    }
+    redirectToHomepage() {
+        window.location.href = "index.html";
     }
 }
 //# sourceMappingURL=SkillView.js.map
