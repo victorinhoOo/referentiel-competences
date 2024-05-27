@@ -1,7 +1,7 @@
 var ValidationLevel;
 (function (ValidationLevel) {
-    ValidationLevel["NotApplicable"] = "NotApplicable";
-    ValidationLevel["NotValidated"] = "NotValidated";
-    ValidationLevel["Validated"] = "Validated";
+    ValidationLevel["NotApplicable"] = "0";
+    ValidationLevel["NotValidated"] = "1";
+    ValidationLevel["Validated"] = "2";
 })(ValidationLevel || (ValidationLevel = {}));
 //# sourceMappingURL=ValidationLevel.js.map

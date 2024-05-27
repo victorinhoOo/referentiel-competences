@@ -3,7 +3,7 @@
  * Gère l'accès aux référentiels de compétences sur le serveur
  */
 class SkillAccess{
-    private apiUrl: string = 'http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=get_skillsets&code='
+    private apiUrl: string = 'http://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=get_skillsets&code='
 
     /**
      * Récupère tous les référentiels de compétences correspondants à un département
@@ -35,7 +35,7 @@ class SkillAccess{
     
         const str = JSON.stringify(compositeObject);
     
-        let response = await fetch("http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=add_skillset", {
+        let response = await fetch("http://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=add_skillset", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -53,7 +53,7 @@ class SkillAccess{
      */
     public async getSkillSetById(id: number): Promise<SkillSet> {
         try {
-            const response = await fetch(`http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=get_skillset&id=${id}`);
+            const response = await fetch(`http://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=get_skillset&id=${id}`);
             const data = await response.json();
             return SkillSet.createFromObject(data); 
         } catch (error) {

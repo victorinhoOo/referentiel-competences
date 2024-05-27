@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 class SkillAccess {
     constructor() {
-        this.apiUrl = 'http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=get_skillsets&code=';
+        this.apiUrl = 'http://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=get_skillsets&code=';
     }
     getSkillSets(codeDept) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -31,7 +31,7 @@ class SkillAccess {
                 token: token
             };
             const str = JSON.stringify(compositeObject);
-            let response = yield fetch("http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=add_skillset", {
+            let response = yield fetch("http://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=add_skillset", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -45,7 +45,7 @@ class SkillAccess {
     getSkillSetById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const response = yield fetch(`http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=get_skillset&id=${id}`);
+                const response = yield fetch(`http://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=get_skillset&id=${id}`);
                 const data = yield response.json();
                 return SkillSet.createFromObject(data);
             }
