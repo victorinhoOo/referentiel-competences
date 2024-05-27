@@ -14,7 +14,7 @@ class AssessmentAccess {
             object["assessment"] = assessment.toObject();
             console.log(assessment.toObject());
             const str = JSON.stringify(object);
-            const url = "http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=add_assessment";
+            const url = "http://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=add_assessment";
             let response = yield fetch(url, {
                 method: "POST",
                 headers: {
