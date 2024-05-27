@@ -1,4 +1,8 @@
 /// <reference path="../model/Skill.ts" />
+
+/**
+ * Représente un ensemble de compétences.
+ */
 class SkillSet{
     private id: number;
 
@@ -51,16 +55,24 @@ class SkillSet{
     
     private skills: Array<Skill>
 
-    public static createFromObject(obj): SkillSet{
-        const skillSet = new SkillSet(obj.code_department); 
-        skillSet.id = obj.id;
-        skillSet.name = obj.name;
-        skillSet.level = obj.level;
-        skillSet.date = new Date(obj.date); 
-        skillSet.active = obj.active;
-
+    public static createFromObject(obj: any): SkillSet {
+        const skillSet = new SkillSet(obj.code_department);
+        skillSet.setId(obj.id);
+        skillSet.setName(obj.name);
+        skillSet.setLevel(obj.level);
+        skillSet.setDate(new Date(obj.date));
+        skillSet.setActive(obj.active === 1);
+        if (obj.skills) {
+            obj.skills.forEach((s) => {
+            let skill = Skill.createFromObject(s);
+            skillSet.skills.push(skill);
+            });
+        }
         return skillSet;
     }
+    /**
+     * Crée une instance de SkillSet
+     */
     public constructor(code_dept: string){
         this.code_department = code_dept;
         this.skills = [];
@@ -70,26 +82,30 @@ class SkillSet{
         this.name = '';
         this.level = 0;
     }
+
+    /**
+     * Ajoute une compétence au skillset
+     */
     public addSkill(skill: Skill): void{
-        this.skills.push(skill)
+        this.skills.push(skill);
     }
+    /**
+     * @returns renvoi le nom du skillset
+     */
     public toString(): string{
-        return `SkillSet ID: ${this.id}, Name: ${this.name}, Level: ${this.level}, Date: ${this.date}, Active: ${this.active}, Department Code: ${this.code_department}`;
+        return this.name;
     }
-    public async create(set: SkillSet): Promise<boolean>{
-        const str = JSON.stringify(set); 
-        let response = await fetch("server/api.php?action=add_skillset", {
-        method: "POST",
-        headers: {
-        "Accept": "application/json",
-        "Content-type":"application/json"
-        },
-        body: str
-        });
-        let ret = true;
-        if (!response.ok) {
-        ret = false;
-        }
-        return ret;
+
+    /**
+     * Obtient la compétence à l'index spécifié.
+     * @param index index de la compétence à récupérer.
+     * @returns compétence à cet index
+     */
+    public getSkillAtIndex(index: number): Skill {
+        return this.skills[index];
+    }
+
+    public getSkills(): Array<Skill>{
+        return this.skills;
     }
 }

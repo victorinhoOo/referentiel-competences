@@ -18,7 +18,11 @@ class ApiException extends Exception
     }
 
     public function __toString():string{
-        return "[".$this->status."]".$this->message;
+        return "HTTP/1.0 ".$this->status." ".$this->message;
+    }
+
+    public function getStatus() : int{
+        return $this->status;
     }
 }
 ?>

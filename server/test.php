@@ -65,6 +65,24 @@
                                  ?>
         </span>
     </p><hr />
+    <h2>Test of database upgrade for TP4</h2>
+    <p>
+        <?php
+    require_once("sgbd/database.php");
+    try {
+        $db = new Database();
+        $ret = $db->query("SELECT * FROM validations_levels",array());
+        if(sizeof($ret)==3)
+            echo "was successful";
+        else
+            echo "was not complete : some validations levels are not found";
+    }
+    catch(Exception $pdoex)
+    {
+        echo "failed with this message :".$pdoex->getMessage();
+    }
+        ?>
+    </p>
 </body>
 </html>
 <?php

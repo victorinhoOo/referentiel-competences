@@ -16,14 +16,20 @@
         <label for="referentiels">Référentiels de compétences:</label>
         <select id="skillSelect"></select>
 
-        <a href="add_skills.html">Ajouter un Référentiel d'Activité</a>
-        <a href="login.html">test login</a>
+        <a href="add_skills.html">Ajouter un Référentiel d'Activité</a><br>
+        <a href="login.html">test login</a><br>
+        <a href="assessment.html" id="competencesButton">evaluation des compétences</a>
     </body>
 
     <script src="client/main.js" type="module"></script>
     <script src="client/model/department.js"></script>
     <script src="client/views/MainView.js"></script>
-    <script src="client/view/SkillView.js"></script>
+    <script src="client/views/SkillView.js"></script>
     <script src="client/data/DepartmentAccess.js"></script>
     <script src="client/data/SkillsAccess.js"></script>
+    <script src="client/model/SkillSet.js"></script>
+    <script src="client/model/Token.js"></script>
+    <script src="client/model/Exceptions/TokenError.js"></script>
+    <script src="client/model/User.js"></script>
+
 </html>

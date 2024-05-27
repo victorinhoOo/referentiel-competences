@@ -9,11 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 class MainView {
     constructor(selectId, selectSkillId) {
+        try {
+            const token = Token.createFromSessionStorage();
+        }
+        catch (e) {
+            alert("Vous n'êtes pas connecté");
+            window.location.href = "login.html";
+        }
         this.selectElement = document.getElementById(selectId);
         this.departmentAccess = new DepartmentAccess();
         this.skillAccess = new SkillAccess();
         this.selectSkill = document.getElementById(selectSkillId);
         this.selectElement.onchange = () => this.ChooseDept();
+        const competencesButton = document.getElementById("competencesButton");
+        competencesButton.onclick = () => this.storeSkillSet();
         this.init();
     }
     init() {
@@ -26,19 +35,32 @@ class MainView {
                 option.textContent = department.toString();
                 this.selectElement.appendChild(option);
             });
+            this.ChooseDept();
         });
     }
     ChooseDept() {
         return __awaiter(this, void 0, void 0, function* () {
             const selectedDeptCode = this.selectElement.value;
-            const skillSets = yield this.skillAccess.getSkillSets(selectedDeptCode);
+            this.skillSets = yield this.skillAccess.getSkillSets(selectedDeptCode);
             this.selectSkill.innerHTML = '';
-            skillSets.forEach(skillSet => {
+            this.skillSets.forEach(skillSet => {
                 const option = document.createElement('option');
                 option.value = skillSet.getId.toString();
                 option.textContent = skillSet.toString();
                 this.selectSkill.appendChild(option);
             });
+        });
+    }
+    storeSkillSet() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const selectedIndex = this.selectSkill.selectedIndex;
+            const skillSet = this.skillSets[selectedIndex];
+            try {
+                sessionStorage.setItem("skillset", JSON.stringify(skillSet));
+            }
+            catch (error) {
+                console.error("Erreur lors du stockage du skill set:", error);
+            }
         });
     }
 }

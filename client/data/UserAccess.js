@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 class UserAccess {
     constructor() {
-        this.apiUrl = 'http://grp-440.iq.iut21.u-bourgogne.fr/skills/server/api.php?action=login';
+        this.apiUrl = 'http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=login';
     }
     connectUser(login, password) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -17,7 +17,6 @@ class UserAccess {
             url.searchParams.append("login", login);
             url.searchParams.append("password", password);
             try {
-                console.log(url.toString());
                 const response = yield fetch(url.toString());
                 const data = yield response.json();
                 return Token.createFromObject(data);

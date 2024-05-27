@@ -1,4 +1,5 @@
 /// <reference path="../data/DepartmentAccess.ts" />
+/// <reference path="../model/Token.ts" />
 // Gère l'affichage du référentiel d'activité
 class SkillView {
     private departmentSelect: HTMLSelectElement;
@@ -12,7 +13,24 @@ class SkillView {
     private numbers: Array<HTMLInputElement>;
     private lists: Array<HTMLUListElement>;
 
+    private token: Token;
+
+    /**
+     * Initialise les différents éléments HTML et ajoute des events listeners sur les boutons
+     */
     constructor() {
+        try {
+            this.token = Token.createFromSessionStorage();
+            if(!this.token.userHasRole("chief")){
+                alert("Vous n'avez pas les permissions pour accéder à cette page");
+                window.location.href = "login.html";
+            }
+        }
+        catch (e) {
+            console.log(e);
+            alert("Vous n'êtes pas connecté");
+            window.location.href = "login.html";
+        }
         this.departmentSelect = document.getElementById('departmentSelect') as HTMLSelectElement;
         this.levelInput = document.getElementById('repoLevel') as HTMLInputElement;
         this.nameInput = document.getElementById('repoName') as HTMLInputElement;
@@ -32,6 +50,8 @@ class SkillView {
         let createButton = document.getElementById("createButton") as HTMLButtonElement;
         createButton.addEventListener("click", () => this.createSkillSet());
 
+        let cancelButton = document.getElementById("cancelButton") as HTMLButtonElement;
+        cancelButton.addEventListener("click", () => this.redirectToHomepage());
 
         this.init();
     }
@@ -70,13 +90,16 @@ class SkillView {
         let label = document.createElement("label");
         label.innerHTML = "Skill name:";
         label.setAttribute("for", labelId);
-        div.appendChild(label);   
+        div.appendChild(label);
+    
         let input = document.createElement("input");
         input.id = labelId;
         input.type = "text";
         div.appendChild(input);
+        this.labels.push(input); 
     }
 
+    // Gère l'affichage de l'ajout de composants
     private createDivForManageComponents(div: HTMLDivElement): void {
         let subDiv = document.createElement("div");
         // Création de l'étiquette, de la zone de saisi et du bouton
@@ -87,6 +110,7 @@ class SkillView {
         input.type = "text";
         subDiv.appendChild(input);
         let button = document.createElement("button");
+        button.type="button";
         button.innerHTML = "Add Component";
         button.onclick = () => {
             // un item de liste est créé avec comme valeur le texte placé dans la zone de saisie
@@ -102,6 +126,7 @@ class SkillView {
         this.lists.push(ul);
     }
 
+    // Gère l'affichage de l'ajout de compétence
     private addNewSkill(): void {
         let skillDiv = document.createElement("div");
         
@@ -115,6 +140,7 @@ class SkillView {
         this.createDivForManageComponents(skillDiv);
     }   
 
+    // Créé un nouveau référentiel
     private async createSkillSet(): Promise<void> {
         const selectedDeptCode = this.departmentSelect.value;
     
@@ -128,24 +154,24 @@ class SkillView {
         for (let i = 0; i < this.currentSkillNumber; i++) {
             let skill = new Skill(); 
             skill.setId(parseInt(this.numbers[i].value));
-            skill.setLabel(this.labels[i].value); // assuming labels is an array of input elements for skill names
-    
-            // Parcourir les composantes essentielles
-            let componentsList = this.lists[i].children;
-            for (let item of componentsList) {
-                let component = new Component(); // Assuming Component is a class you have defined
-                component.setLabel(item.textContent); // assuming the item is the LI element
+            skill.setLabel(this.labels[i].value); 
+            // Parcourt les composant essentiels
+            console.log("List children:", this.lists[i].children);
+            for (let item of this.lists[i].children) {
+                console.log("Processing item:", item, "Content:", item.textContent);
+                let component = new Component(); 
+                component.setLabel(item.textContent);
                 skill.addComponent(component);
             }
     
-            // Ajouter la compétence au référentiel
+            // Ajoute la compétence au référentiel
             newSkillSet.addSkill(skill);
+            console.log(skill);
         }
-    
-        // Utilisation d’un objet de type SkillAccess pour envoyer le SkillSet créé au serveur
+        console.log(newSkillSet);
         let skillAccess = new SkillAccess();
         try {
-            let result = await skillAccess.create(newSkillSet);
+            let result = await skillAccess.create(newSkillSet, this.token);
             if (result) {
                 alert("SkillSet created successfully!");
                 window.location.href = "index.html"; 
@@ -157,5 +183,8 @@ class SkillView {
             alert("Error creating SkillSet: " + error.message);
         }
     }
+    private redirectToHomepage(): void{
+        window.location.href = "index.html";
+    } 
     
 }

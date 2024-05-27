@@ -9,8 +9,8 @@ class Database
 {
     private string $host = "localhost";
     private string $base = "grp-440_s4_progweb";
-    private string $user = "grp-440";
-    private string $pass = "JNF2RxZFbI";
+    private string $user = "root";
+    private string $pass = "";
 
     private PDO $pdo;
 
