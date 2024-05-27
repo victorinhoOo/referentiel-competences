@@ -1,4 +1,8 @@
 /// <reference path="../model/Skill.ts" />
+
+/**
+ * Représente un ensemble de compétences.
+ */
 class SkillSet{
     private id: number;
 
@@ -58,8 +62,17 @@ class SkillSet{
         skillSet.setLevel(obj.level);
         skillSet.setDate(new Date(obj.date));
         skillSet.setActive(obj.active === 1);
+        if (obj.skills) {
+            obj.skills.forEach((s) => {
+            let skill = Skill.createFromObject(s);
+            skillSet.skills.push(skill);
+            });
+        }
         return skillSet;
     }
+    /**
+     * Crée une instance de SkillSet
+     */
     public constructor(code_dept: string){
         this.code_department = code_dept;
         this.skills = [];
@@ -69,10 +82,30 @@ class SkillSet{
         this.name = '';
         this.level = 0;
     }
+
+    /**
+     * Ajoute une compétence au skillset
+     */
     public addSkill(skill: Skill): void{
         this.skills.push(skill);
     }
+    /**
+     * @returns renvoi le nom du skillset
+     */
     public toString(): string{
         return this.name;
+    }
+
+    /**
+     * Obtient la compétence à l'index spécifié.
+     * @param index index de la compétence à récupérer.
+     * @returns compétence à cet index
+     */
+    public getSkillAtIndex(index: number): Skill {
+        return this.skills[index];
+    }
+
+    public getSkills(): Array<Skill>{
+        return this.skills;
     }
 }

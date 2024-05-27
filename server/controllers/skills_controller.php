@@ -42,5 +42,16 @@ class SkillsController{
         $this->service->addSkillSet($set);
         echo $set->getId();
     }
+
+    /**
+     * Get an entire skill set (with all sub-objects) in JSON
+     * @param int $id id of the skill set wanted
+     * HTTP response : skill set serialized in JSON
+     */
+    public function getSkillSet(int $id){
+        $ret = $this->service->getSkillSet($id);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($ret);
+    }
 }
 ?>

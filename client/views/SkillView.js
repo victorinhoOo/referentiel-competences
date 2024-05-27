@@ -12,13 +12,13 @@ class SkillView {
         try {
             this.token = Token.createFromSessionStorage();
             if (!this.token.userHasRole("chief")) {
-                alert("You don't have the permissions to access this page");
+                alert("Vous n'avez pas les permissions pour accéder à cette page");
                 window.location.href = "login.html";
             }
         }
         catch (e) {
             console.log(e);
-            alert("You are not connected");
+            alert("Vous n'êtes pas connecté");
             window.location.href = "login.html";
         }
         this.departmentSelect = document.getElementById('departmentSelect');

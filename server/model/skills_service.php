@@ -33,5 +33,15 @@ class SkillsService
     {
         $this->dao->insertSkillSet($set);
     }
+
+    /**
+     * Get an entire skill set from its id
+     * @param int $id id of skillset
+     * @return array associative array with properties of the skillset
+     */
+    public function getSkillSet(int $id):array
+    {
+        return $this->dao->getSkillSet($id);
+    }
 }
 ?>

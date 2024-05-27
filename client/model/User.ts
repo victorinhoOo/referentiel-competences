@@ -1,6 +1,9 @@
 // Gère les attributs d'un utilisateur
 class User {
     private login: string;
+    public getLogin(): string{
+        return this.login;
+    }
     private name: string;
     public getName(): string {
         return this.name;

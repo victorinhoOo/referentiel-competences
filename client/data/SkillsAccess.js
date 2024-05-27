@@ -42,5 +42,18 @@ class SkillAccess {
             return response.ok;
         });
     }
+    getSkillSetById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield fetch(`http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=get_skillset&id=${id}`);
+                const data = yield response.json();
+                return SkillSet.createFromObject(data);
+            }
+            catch (error) {
+                console.error('Erreur de récupération du SkillSet:', error);
+                throw error;
+            }
+        });
+    }
 }
 //# sourceMappingURL=SkillsAccess.js.map

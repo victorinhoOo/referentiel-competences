@@ -1,4 +1,7 @@
 /// <reference path="../data/UserAccess.ts" />
+/**
+ * Gère la vue de connexion
+ */
 class LoginView {
     private loginInput: HTMLInputElement;
     private passwordInput: HTMLInputElement;
@@ -12,13 +15,12 @@ class LoginView {
         const loginButton = document.getElementById('loginButton') as HTMLButtonElement;
         loginButton.addEventListener('click', () => this.login());
     }
-
     private async login(): Promise<void> {
         const login = this.loginInput.value;
         const password = this.passwordInput.value;
 
         try {
-            const token = await this.userAccess.connectUser(login, password);
+            const token = await this.userAccess.connectUser(login, password); // récupère un token d'authentification
             sessionStorage.setItem('authToken', JSON.stringify(token));
             console.log(`Utilisateur ${token.getConnectedUser().getName()} connecté`); 
             window.location.href = "index.html";

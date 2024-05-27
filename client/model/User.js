@@ -1,4 +1,7 @@
 class User {
+    getLogin() {
+        return this.login;
+    }
     getName() {
         return this.name;
     }

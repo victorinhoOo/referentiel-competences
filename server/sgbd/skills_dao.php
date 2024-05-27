@@ -33,7 +33,7 @@ class SKillsDao implements SkillsData
      * @param SkillSet $skillSet the skill set to insert
      * @throws Exception if something goes bad
      */
-    public function insertSkillSet(SkillSet $skillSet) 
+    public function insertSkillSet(SkillSet $skillSet)
     {
         $this->db->beginTransaction();
         try
@@ -49,7 +49,7 @@ class SKillsDao implements SkillsData
                     "name" => $skillSet->getName()
                 ]
             );
-            // then retrieve its ID 
+            // then retrieve its ID
             $res = $this->db->query("SELECT LAST_INSERT_ID() as id;",array());
             $id = $res[0]["id"];
             // create now the skills
@@ -74,7 +74,7 @@ class SKillsDao implements SkillsData
             "INSERT INTO skill(number,label,id_skillset) VALUES(:number,:label,:idskillset);",
             ["number" => $skill->getNumber(), "label" => $skill->getLabel(), "idskillset" => $id_skillset]
         );
-        // retreive its ID 
+        // retreive its ID
         $res = $this->db->query("SELECT LAST_INSERT_ID() as id", []);
         $id = $res[0]["id"];
         // then the components
@@ -91,6 +91,40 @@ class SKillsDao implements SkillsData
             ,
             ["label" => $component->getLabel(), "idskill" => $id_skill]
         );
+    }
+
+    public function getSkillSet(int $id):array
+    {        
+        // get an associative array with the skillset itself
+        $req = "SELECT * FROM skillset WHERE id=:id";
+        $res = $this->db->query($req,["id"=>$id]);
+        $set = $res[0]; // what to do if not ?
+        $set["skills"]= $this->getSkills($set["id"]);
+
+        return $set;
+    }
+
+    private function getSkills(int $id_skillset) : array
+    {
+        // gets associative arrays with skills        
+        $req = "SELECT * FROM skill WHERE id_skillset=:id";
+        $skills = $this->db->query($req,["id"=>$id_skillset]);        
+
+        // add components of each skill
+        foreach($skills as &$skill)
+        {
+            $components = $this->getComponents($skill["id"]);            
+            $skill["components"]=$components;            
+        }        
+        return $skills;
+    }
+
+    private function getComponents(int $id_skill) : array
+    {
+        // get components of a skill
+        $req = "SELECT * FROM component WHERE id_skill=:id";
+        $res = $this->db->query($req,["id"=>$id_skill]);
+        return $res;
     }
 }
 ?>

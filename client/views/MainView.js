@@ -13,7 +13,7 @@ class MainView {
             const token = Token.createFromSessionStorage();
         }
         catch (e) {
-            alert("You are not connected");
+            alert("Vous n'êtes pas connecté");
             window.location.href = "login.html";
         }
         this.selectElement = document.getElementById(selectId);
@@ -41,9 +41,9 @@ class MainView {
     ChooseDept() {
         return __awaiter(this, void 0, void 0, function* () {
             const selectedDeptCode = this.selectElement.value;
-            const skillSets = yield this.skillAccess.getSkillSets(selectedDeptCode);
+            this.skillSets = yield this.skillAccess.getSkillSets(selectedDeptCode);
             this.selectSkill.innerHTML = '';
-            skillSets.forEach(skillSet => {
+            this.skillSets.forEach(skillSet => {
                 const option = document.createElement('option');
                 option.value = skillSet.getId.toString();
                 option.textContent = skillSet.toString();
@@ -54,15 +54,12 @@ class MainView {
     storeSkillSet() {
         return __awaiter(this, void 0, void 0, function* () {
             const selectedIndex = this.selectSkill.selectedIndex;
-            const selectedOption = this.selectSkill.options[selectedIndex];
-            const skillSetId = selectedOption.value;
+            const skillSet = this.skillSets[selectedIndex];
             try {
-                const skillSet = yield this.skillAccess.getSkillSets(skillSetId);
-                const skillSetJson = JSON.stringify(skillSet);
-                sessionStorage.setItem("skillset", skillSetJson);
+                sessionStorage.setItem("skillset", JSON.stringify(skillSet));
             }
             catch (error) {
-                console.error("Error storing skill set:", error);
+                console.error("Erreur lors du stockage du skill set:", error);
             }
         });
     }

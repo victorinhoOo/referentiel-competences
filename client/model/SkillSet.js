@@ -42,6 +42,12 @@ class SkillSet {
         skillSet.setLevel(obj.level);
         skillSet.setDate(new Date(obj.date));
         skillSet.setActive(obj.active === 1);
+        if (obj.skills) {
+            obj.skills.forEach((s) => {
+                let skill = Skill.createFromObject(s);
+                skillSet.skills.push(skill);
+            });
+        }
         return skillSet;
     }
     constructor(code_dept) {
@@ -58,6 +64,12 @@ class SkillSet {
     }
     toString() {
         return this.name;
+    }
+    getSkillAtIndex(index) {
+        return this.skills[index];
+    }
+    getSkills() {
+        return this.skills;
     }
 }
 //# sourceMappingURL=SkillSet.js.map

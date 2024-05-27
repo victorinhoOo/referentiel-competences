@@ -1,4 +1,7 @@
 /// <reference path="../model/department.ts" />
+/**
+ * Gère l'accès aux départements sur le serveur
+ */
 class DepartmentAccess {
     private apiUrl: string = 'http://localhost/tp/2024-R410-DUBOZ/server/api.php?action=get_depts';
 

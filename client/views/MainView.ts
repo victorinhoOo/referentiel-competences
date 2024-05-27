@@ -7,15 +7,23 @@ class MainView{
     private departmentAccess: DepartmentAccess;
     private selectSkill: HTMLSelectElement;
     private skillAccess: SkillAccess;
+    private skillSets : SkillSet[];
 
+    /**
+     * Constructeur de la classe MainView.
+     * @param selectId Identifiant HTML du menu déroulant des départements.
+     * @param selectSkillId Identifiant HTML du menu déroulant des skill sets.
+     */
     constructor(selectId: string, selectSkillId : string) {
+        // vérifie la connexion
         try {
             const token = Token.createFromSessionStorage();
         }
         catch (e) {
-            alert("You are not connected");
+            alert("Vous n'êtes pas connecté");
             window.location.href = "login.html";
         }
+        // Initialisation des éléments et des accès aux données
         this.selectElement = document.getElementById(selectId) as HTMLSelectElement;
         this.departmentAccess = new DepartmentAccess();
         this.skillAccess = new SkillAccess();
@@ -28,6 +36,9 @@ class MainView{
         this.init();
     }
 
+    /**
+     * Initialise les menus déroulants avec les départements.
+     */
     private async init(): Promise<void> {
         this.selectElement.innerHTML = '';  
         // Récupère les départements et les ajoute au select
@@ -40,27 +51,32 @@ class MainView{
         });
         this.ChooseDept();
     }
+
+    /**
+     * Charge et affiche les ensembles de compétences associés au département sélectionné.
+     */
     private async ChooseDept(): Promise<void> {
         const selectedDeptCode = this.selectElement.value;
-        const skillSets = await this.skillAccess.getSkillSets(selectedDeptCode);
+        this.skillSets = await this.skillAccess.getSkillSets(selectedDeptCode);
         this.selectSkill.innerHTML = '';
-        skillSets.forEach(skillSet => {
+        this.skillSets.forEach(skillSet => {
             const option = document.createElement('option');
             option.value = skillSet.getId.toString(); 
             option.textContent = skillSet.toString(); 
             this.selectSkill.appendChild(option);
         });
     }
+
+    /**
+     * Stocke le skillset sélectionné dans le sessionStorage.
+     */
     private async storeSkillSet(): Promise<void> {
         const selectedIndex = this.selectSkill.selectedIndex;
-        const selectedOption = this.selectSkill.options[selectedIndex];
-        const skillSetId = selectedOption.value;
+        const skillSet = this.skillSets[selectedIndex];
         try {
-            const skillSet = await this.skillAccess.getSkillSets(skillSetId); // Assuming there is a method to fetch skill set by ID
-            const skillSetJson = JSON.stringify(skillSet);
-            sessionStorage.setItem("skillset", skillSetJson);
+            sessionStorage.setItem("skillset", JSON.stringify(skillSet));
         } catch (error) {
-            console.error("Error storing skill set:", error);
+            console.error("Erreur lors du stockage du skill set:", error);
         }
-    }  
+    }
 }
