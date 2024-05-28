@@ -48,7 +48,11 @@ class SkillView {
         });
 
         let createButton = document.getElementById("createButton") as HTMLButtonElement;
-        createButton.addEventListener("click", () => this.createSkillSet());
+        createButton.addEventListener("click", (e) =>{
+            e.preventDefault();
+            this.createSkillSet();
+            return false;
+        });
 
         let cancelButton = document.getElementById("cancelButton") as HTMLButtonElement;
         cancelButton.addEventListener("click", () => this.redirectToHomepage());
@@ -148,13 +152,14 @@ class SkillView {
         newSkillSet.setName(this.nameInput.value);
         newSkillSet.setLevel(parseInt(this.levelInput.value));
         newSkillSet.setDate(new Date(this.dateInput.value));
-        newSkillSet.setActive(true); 
+        newSkillSet.setActive(true);
     
         // Pour chaque skill
         for (let i = 0; i < this.currentSkillNumber; i++) {
             let skill = new Skill(); 
             skill.setId(parseInt(this.numbers[i].value));
-            skill.setLabel(this.labels[i].value); 
+            skill.setLabel(this.labels[i].value);
+            skill.setNumber(parseInt(this.numbers[i].value));
             // Parcourt les composant essentiels
             console.log("List children:", this.lists[i].children);
             for (let item of this.lists[i].children) {

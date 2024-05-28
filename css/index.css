@@ -1,0 +1,136 @@
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: rgb(22, 151, 145);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+label {
+    display: block;
+    margin: 20px 0 5px;
+    font-weight: bold;
+}
+
+.container-form{
+    width : 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column ;
+    align-items: center;
+    height: 25vh;
+    margin-bottom: 60px;
+
+}
+
+.container-form span{
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+select{
+    width: 500px;
+    padding: 8px;
+}
+
+.button-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+a {
+    text-align: center;
+    background-color: rgb(19, 131, 125);
+    width: 300px;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    background-color: rgb(16, 95, 16);
+    outline: none;
+}
+
+a:focus {
+    box-shadow: 0 0 3px 2px rgba(0, 123, 255, 0.5);
+}
+
+.container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .container {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 992px) {
+    header h1 {
+        font-size: 1.6em;
+    }
+
+    .container-form {
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.4em;
+    }
+
+    .container-form span, select {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    a {
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    header h1 {
+        font-size: 1.2em;
+    }
+
+    .container-form span, select {
+        max-width: 300px;
+    }
+
+    a {
+        max-width: 200px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+}
+

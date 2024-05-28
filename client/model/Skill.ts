@@ -40,6 +40,10 @@ class Skill implements SkillElement {
     }
 
     private number: number; 
+
+    public setNumber(value: number): void{
+        this.number = value;
+    }
     private components: Component[] = []; 
 
     public getType(): string {

@@ -11,6 +11,9 @@ class Skill {
     getLabel() {
         return this.label;
     }
+    setNumber(value) {
+        this.number = value;
+    }
     getType() {
         return "skill";
     }

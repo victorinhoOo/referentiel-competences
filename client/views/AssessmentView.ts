@@ -184,6 +184,8 @@ class AssessmentView{
             try {
                 await this.submitAssessment();
                 alert('Évaluation soumise avec succès !');
+                window.location.href = 'index.html';
+
             } catch (error) {
                 console.error('Erreur lors de la soumission de l\'évaluation:', error);
                 alert('Échec de la soumission de l\'évaluation. Veuillez réessayer.');

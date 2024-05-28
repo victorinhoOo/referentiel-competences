@@ -1,24 +1,32 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="fr">
 <head>
-    <title>Skills assement</title>
-    <link href="styles/main.css" rel="stylesheet" />
+    <title>Evaluation de compétences</title>
+    <link href="css/index.css" rel="stylesheet" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
     <body>
         <header>
-            <h1>Skills Assetment</h1>
+            <h1>Evaluation de compétences</h1>
         </header>
-        <label for="filiere">Filières:</label>
-        <select id="departmentSelect"></select>
 
-        <label for="referentiels">Référentiels de compétences:</label>
-        <select id="skillSelect"></select>
+        <div class="container-form">
+            <span>
+                <label for="departmentSelect">Filières:</label>
+                <select id="departmentSelect"></select>
+            </span>
 
-        <a href="add_skills.html">Ajouter un Référentiel d'Activité</a><br>
-        <a href="login.html">test login</a><br>
-        <a href="assessment.html" id="competencesButton">evaluation des compétences</a>
+
+            <span>
+                <label for="skillSelect">Référentiels de compétences:</label>
+                <select id="skillSelect"></select>
+            </span>
+        </div>
+        <div class="button-container">
+            <a href="add_skills.html">Ajouter un Référentiel d'Activité</a><br>
+            <a href="assessment.html" id="competencesButton">Questionnaire de compétences</a>
+        </div>
     </body>
 
     <script src="client/main.js" type="module"></script>

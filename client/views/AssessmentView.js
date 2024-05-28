@@ -140,6 +140,7 @@ class AssessmentView {
             try {
                 yield this.submitAssessment();
                 alert('Évaluation soumise avec succès !');
+                window.location.href = 'index.html';
             }
             catch (error) {
                 console.error('Erreur lors de la soumission de l\'évaluation:', error);

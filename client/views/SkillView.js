@@ -35,7 +35,11 @@ class SkillView {
             this.addNewSkill();
         });
         let createButton = document.getElementById("createButton");
-        createButton.addEventListener("click", () => this.createSkillSet());
+        createButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            this.createSkillSet();
+            return false;
+        });
         let cancelButton = document.getElementById("cancelButton");
         cancelButton.addEventListener("click", () => this.redirectToHomepage());
         this.init();
@@ -123,6 +127,7 @@ class SkillView {
                 let skill = new Skill();
                 skill.setId(parseInt(this.numbers[i].value));
                 skill.setLabel(this.labels[i].value);
+                skill.setNumber(parseInt(this.numbers[i].value));
                 console.log("List children:", this.lists[i].children);
                 for (let item of this.lists[i].children) {
                     console.log("Processing item:", item, "Content:", item.textContent);

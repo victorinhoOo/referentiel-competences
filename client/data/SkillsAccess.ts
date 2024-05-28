@@ -43,7 +43,13 @@ class SkillAccess{
             },
             body: str
         });
-        return response.ok;
+        let ret = true;
+        if (!response.ok) {
+            const msg = await response.text();
+            console.log(msg);
+            ret = false;
+        }
+        return ret;
     }
 
     /**
