@@ -179,7 +179,7 @@ class AssessmentView{
      */
     private showSubmitButton(): void {
         const submitButton = document.createElement('button');
-        submitButton.textContent = 'Valider';
+        submitButton.textContent = "Valider l'évaluation";
         submitButton.onclick = async () => {
             try {
                 await this.submitAssessment();

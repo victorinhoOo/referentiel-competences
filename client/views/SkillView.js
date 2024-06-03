@@ -61,7 +61,7 @@ class SkillView {
     createInputFieldForSkillNumber(div) {
         let labelId = "number" + this.currentSkillNumber.toString();
         let label = document.createElement("label");
-        label.innerHTML = "Skill number:";
+        label.innerHTML = "Numéro de la compétence:";
         label.setAttribute("for", labelId);
         div.appendChild(label);
         let input = document.createElement("input");
@@ -74,7 +74,7 @@ class SkillView {
     createInputForSkillName(div) {
         let labelId = "name" + this.currentSkillNumber.toString();
         let label = document.createElement("label");
-        label.innerHTML = "Skill name:";
+        label.innerHTML = "Nom de la compétence:";
         label.setAttribute("for", labelId);
         div.appendChild(label);
         let input = document.createElement("input");
@@ -85,15 +85,19 @@ class SkillView {
     }
     createDivForManageComponents(div) {
         let subDiv = document.createElement("div");
+        let inputId = `componentInput-${this.lists.length}`;
         let label = document.createElement("label");
-        label.innerHTML = "Component:";
+        label.innerHTML = "Composant:";
+        label.setAttribute("for", inputId);
         subDiv.appendChild(label);
         let input = document.createElement("input");
         input.type = "text";
+        input.id = inputId;
         subDiv.appendChild(input);
         let button = document.createElement("button");
         button.type = "button";
-        button.innerHTML = "Add Component";
+        button.innerHTML = "Ajouter le composant";
+        button.className = "componentButton";
         button.onclick = () => {
             let listItem = document.createElement("li");
             listItem.textContent = input.value;

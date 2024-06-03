@@ -1,25 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login User</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
     <div class="login-container">
-            <h2>Login User</h2>
+        <header>
+            <h1>Connexion</h1>
+        </header>
+        <div class="container-form">
             <div class="input-group">
-                <label for="login">Login</label>
-                <input type="text" id="login" name="login" placeholder="Type login here" required>
+                <label for="login">Nom d'utilisateur</label>
+                <input type="text" id="login" name="login" placeholder="Saisir votre login" required>
             </div>
             <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" placeholder="Saisir votre mot de passe" required>
             </div>
-            <button id="loginButton">Log in</button>
-
+        </div>
+        <div class="button-container">
+            <button id="loginButton">Se connecter</button>
+        </div>
     </div>
+    <footer>
+        <p>Victor Duboz - Tout droit réservés - IUT Informatique</p>
+    </footer>
 </body>
 <script src="client/mainLogin.js" type="module"></script>
 <script src="client/views/LoginView.js"></script>

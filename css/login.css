@@ -1,4 +1,3 @@
-/* Base styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -28,29 +27,24 @@ label {
     font-weight: bold;
 }
 
-.container-form{
-    width : 100%;
+.container-form {
+    width: 100%;
     display: flex;
     justify-content: space-evenly;
-    flex-direction: column ;
+    flex-direction: column;
     align-items: center;
     height: 25vh;
     margin-bottom: 60px;
-
 }
 
-.container-form span{
+.container-form .input-group {
     width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
-select{
-    width: 500px;
-    padding: 8px;
-}
 
-.button-container{
+.button-container {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -58,21 +52,26 @@ select{
     flex-direction: column;
 }
 
-a {
+#loginButton {
     text-align: center;
-    background-color:rgb(47, 47, 94);
+    background-color: rgb(19, 131, 125);
+    border: #333;
     width: 300px;
     padding: 10px;
     color: white;
     text-decoration: none;
     margin-bottom: 30px;
-    transition: transform 0.05s ease-in-out;
 }
 
-a:hover{
-    background-color: rgb(19, 131, 125);
+#loginButton:hover {
+    background-color: rgb(47, 47, 94);
     outline: none;
-    transform: scale(1.1);
+    cursor: pointer;
+}
+
+
+input {
+    height: 30px;
 }
 
 /* Footer Styles */
@@ -99,23 +98,6 @@ footer p {
 
     .container {
         padding: 15px;
-        margin-bottom: 100px;
-    }
-
-    /* Additional styles for tablet */
-    label {
-        font-size: 1.2em;
-    }
-
-    select {
-        font-size: 1.2em;
-        padding: 10px;
-    }
-
-    a {
-        font-size: 1.2em;
-        width: 250px;
-        padding: 12px;
     }
 }
 
@@ -126,12 +108,6 @@ footer p {
 
     .container-form {
         height: auto;
-        margin-bottom: 100px;
-    }
-
-    a {
-        max-width: 350px;
-        margin-bottom: 30px;
     }
 }
 
@@ -140,14 +116,13 @@ footer p {
         font-size: 1.4em;
     }
 
-    .container-form span, select {
+    .container-form .input-group {
         width: 100%;
         max-width: 400px;
     }
 
-    a {
-        max-width: 350px;
-        margin-bottom: 30px;
+    #loginButton {
+        max-width: 250px;
     }
 }
 
@@ -156,18 +131,36 @@ footer p {
         font-size: 1.2em;
     }
 
-    .container-form span, select {
+    .container-form .input-group {
+        width: 100%;
         max-width: 300px;
     }
 
-    a {
+    #loginButton {
         max-width: 200px;
-        margin-bottom: 30px;
     }
 
     .container {
         padding: 10px;
-        margin-bottom: 40px;
     }
 }
 
+/* Specific adjustments for phones */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1em;
+    }
+
+    .container-form .input-group {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    #loginButton {
+        max-width: 150px;
+    }
+
+    .container {
+        padding: 5px;
+    }
+}

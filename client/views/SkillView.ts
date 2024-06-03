@@ -77,7 +77,7 @@ class SkillView {
     private createInputFieldForSkillNumber(div: HTMLDivElement): void {
         let labelId = "number" + this.currentSkillNumber.toString();
         let label = document.createElement("label");
-        label.innerHTML = "Skill number:";
+        label.innerHTML = "Numéro de la compétence:";
         label.setAttribute("for", labelId);
         div.appendChild(label);
     
@@ -92,7 +92,7 @@ class SkillView {
     private createInputForSkillName(div: HTMLDivElement): void {
         let labelId = "name" + this.currentSkillNumber.toString();
         let label = document.createElement("label");
-        label.innerHTML = "Skill name:";
+        label.innerHTML = "Nom de la compétence:";
         label.setAttribute("for", labelId);
         div.appendChild(label);
     
@@ -106,16 +106,25 @@ class SkillView {
     // Gère l'affichage de l'ajout de composants
     private createDivForManageComponents(div: HTMLDivElement): void {
         let subDiv = document.createElement("div");
+        
+        // Créer un identifiant unique pour l'input
+        let inputId = `componentInput-${this.lists.length}`;
+        
         // Création de l'étiquette, de la zone de saisi et du bouton
         let label = document.createElement("label");
-        label.innerHTML = "Component:";
+        label.innerHTML = "Composant:";
+        label.setAttribute("for", inputId);
         subDiv.appendChild(label);
+        
         let input = document.createElement("input");
         input.type = "text";
+        input.id = inputId; // Assigner l'identifiant unique à l'input
         subDiv.appendChild(input);
+        
         let button = document.createElement("button");
-        button.type="button";
-        button.innerHTML = "Add Component";
+        button.type = "button";
+        button.innerHTML = "Ajouter le composant";
+        button.className = "componentButton";
         button.onclick = () => {
             // un item de liste est créé avec comme valeur le texte placé dans la zone de saisie
             let listItem = document.createElement("li");
@@ -124,11 +133,14 @@ class SkillView {
             input.value = "";
         };
         subDiv.appendChild(button);
+        
         let ul = document.createElement("ul");
         subDiv.appendChild(ul);
+        
         div.appendChild(subDiv);
         this.lists.push(ul);
     }
+
 
     // Gère l'affichage de l'ajout de compétence
     private addNewSkill(): void {
