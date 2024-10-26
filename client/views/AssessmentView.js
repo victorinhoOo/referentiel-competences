@@ -135,7 +135,7 @@ class AssessmentView {
     }
     showSubmitButton() {
         const submitButton = document.createElement('button');
-        submitButton.textContent = 'Valider';
+        submitButton.textContent = "Valider l'évaluation";
         submitButton.onclick = () => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.submitAssessment();
